@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block header %}
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Heart Health</a>
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+{% endblock header %}
+
+{% block content %}
+  <div class="box">
+    <h3>Welcome To Heart Health!</h3>
+    <br>
+    <div width="100%">
+      <img src="static/images/heart.jpeg" alt="" class="heart-img">
+    </div>
+    <br>
+    <p>Heart Health puts your heart as priority #1. Ease your mind about managing your heart's health records with our 
+      easy to use web page!
+    </p>
+  </div>
+{% endblock content %}
