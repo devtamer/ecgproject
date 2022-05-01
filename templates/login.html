@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block header %}
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('home') }}">Heart Health</a>
+        </div>
+    </nav>
+{% endblock header %}
+
+{% block content %}
+  <div class="box">
+    <form action="{{ url_for('register') }}" method="post" class="register-form">
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input type="email" class="form-control" id="email" placeholder="Ex: john@example.com" required>
+        </div>
+        <br>
+        <div class="form-group">
+          <label for="pass">Password</label>
+          <input type="password" class="form-control" id="pass" placeholder="Password" required>
+        </div>
+        <br>
+        <button type="submit" class="btn">Login</button>
+    </form>
+  </div>
+{% endblock content %}
