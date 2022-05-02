@@ -10,4 +10,6 @@ class Database_Handler():
 
     # TODO: Set up a SQL query (and action) to insert user into DB using a Python dictionary.
     def insert_user(self, user):
+        query = f"INSERT INTO User {str(tuple(user.keys()))} VALUES {str(tuple(user.values()))}"
+        
         pass
