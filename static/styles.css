@@ -2,7 +2,7 @@
     --main-color: #FF6B6B;
     --darker-color: #FF4757;
     --accent-color: #FFFFFF;
-  }
+}
 
 html {
     background-color: var(--main-color);

@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block header %}
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('home') }}">Heart Health</a>
+        </div>
+    </nav>
+{% endblock header %}
+
+{% block content %}
+  <div class="box">
+    <h1>{{ user.FirstName }}{{ user.LastName }}</h1>
+  </div>
+{% endblock content %}
