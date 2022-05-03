@@ -24,6 +24,7 @@ def register():
                 cur = con.cursor()
                 cur.execute("INSERT INTO user (FirstName, LastName, Email, Password) VALUES(?,?,?,?)", (user["FirstName"], user["LastName"], user["Email"], user["Password"]))
                 con.commit()
+                con.close()
         except sql.Error as error:
             return render_template('404.html', error="SQL Error")
         finally:
@@ -38,14 +39,13 @@ def login():
             with sql.connect("HeartHealth.db") as con:
                 cur = con.cursor()
                 cur.execute("SELECT * FROM user")
-                for row in cur.fetchall():
+                results = cur.fetchall()
+                for row in results:
                     email = row[3]
                     password = row[4]
-                    if ((request.form['email'] == email) and (request.form['password'] == password)):
-                        return "<h1>Yeah</h1>"
-                        #return redirect(url_for('account/{row[0]}'))
-            return "<h1>Nope</h1>"
-        except sql.Error as error:
+                    if ((request.form['email'] == email) and (request.form['pass'] == password)):
+                        return redirect(url_for('account', id=row[0]))
+        except sql.Error:
             return render_template('404.html', error="SQL Error")
 
 @app.route("/account/<id>")
@@ -54,14 +54,13 @@ def account(id):
         with sql.connect("HeartHealth.db") as con:
             cur = con.cursor()
             cur.execute(f"SELECT * FROM user WHERE Id = {id}")
-            cur.fetchone()
-            # user = {
-            #     "FirstName" : cur[1],
-            #     "LastName" : cur[0][2],
-            #     "Email" : cur[0][3]
-            # }  
-            #return render_template('account.html', user=user)
-            return "<h1>Hoop</h1>"
+            result = cur.fetchone()
+            user = {
+                "FirstName" : result[1],
+                "LastName" : result[2],
+                "Email" : result[3]
+            }  
+            return render_template('account.html', user=user)
     except sql.Error as error:
         return render_template('404.html', error="SQL Error")
         

@@ -10,15 +10,15 @@
 
 {% block content %}
   <div class="box">
-    <form action="{{ url_for('register') }}" method="post" class="register-form">
+    <form action="{{ url_for('login') }}" method="POST" class="login-form">
         <div class="form-group">
           <label for="email">Email address</label>
-          <input type="email" class="form-control" id="email" placeholder="Ex: john@example.com" required>
+          <input type="email" class="form-control" name="email" id="email" placeholder="Ex: john@example.com" required>
         </div>
         <br>
         <div class="form-group">
           <label for="pass">Password</label>
-          <input type="password" class="form-control" id="pass" placeholder="Password" required>
+          <input type="password" class="form-control" name="pass" id="pass" placeholder="Password" required>
         </div>
         <br>
         <button type="submit" class="btn">Login</button>
