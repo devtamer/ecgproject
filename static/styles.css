@@ -36,6 +36,23 @@ h3 {
     border-color: var(--main-color);
 }
 
+.email-btn {
+    position: absolute;
+    background-color: var(--main-color);
+    color: var(--accent-color);
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.email-btn:hover {
+    position: absolute;
+    background-color: var(--accent-color);;
+    color: var(--main-color);
+    border-color: var(--main-color);
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
 .heart-img {
     position: relative;
     width: 80%;
