@@ -111,7 +111,7 @@ def send_email(recipient, ecgbpm, ecgpng):
     port = 587
     smtp_server = "smtp.gmail.com"
     sender_email = "ecgproject578@gmail.com"
-    password = "yourmother66$$"
+    password = "578wireless$$"
     msg = MIMEMultipart()
     msg['From'] = sender_email
     msg['To'] = recipient
