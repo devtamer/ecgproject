@@ -3,7 +3,9 @@ from flask_bcrypt import Bcrypt
 import sqlite3 as sql
 
 app = Flask(__name__)
+
 bcrypt = Bcrypt(app)
+
 
 @app.route("/")
 @app.route("/home")
@@ -67,4 +69,4 @@ def account(id):
         return render_template('404.html', error="SQL Error")
         
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
