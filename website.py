@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 bcrypt = Bcrypt(app)
 
-
+heartdb = "heart.db"
 @app.route("/")
 @app.route("/home")
 def home():
@@ -24,7 +24,7 @@ def register():
                 "Email" : request.form['email'],
                 "Password" : bcrypt.generate_password_hash(request.form['pass'])
             }   
-            with sql.connect("HeartHealth.db") as con:
+            with sql.connect(heartdb) as con:
                 cur = con.cursor()
                 cur.execute("INSERT INTO user (FirstName, LastName, Email, Password) VALUES(?,?,?,?)", (user["FirstName"], user["LastName"], user["Email"], user["Password"]))
                 con.commit()
@@ -40,7 +40,7 @@ def login():
         return render_template('login.html', title="Login")
     elif request.method == 'POST':
         try:
-            with sql.connect("HeartHealth.db") as con:
+            with sql.connect(heartdb) as con:
                 cur = con.cursor()
                 cur.execute("SELECT * FROM user")
                 results = cur.fetchall()
@@ -55,9 +55,9 @@ def login():
 @app.route("/account/<id>")
 def account(id):
     try:
-        with sql.connect("HeartHealth.db") as con:
+        with sql.connect(heartdb) as con:
             cur = con.cursor()
-            cur.execute(f"SELECT * FROM user WHERE Id = {id}")
+            cur.execute("SELECT * FROM user WHERE Id = ?", id)
             result = cur.fetchone()
             user = {
                 "FirstName" : result[1],
@@ -66,7 +66,7 @@ def account(id):
             }  
             return render_template('account.html', user=user, id=id)
     except sql.Error:
-        return render_template('404.html', error="SQL Error")
+        return render_template('404.html', error="Error Verifying User")
         
 if __name__ == '__main__':
     app.run(debug=True)
