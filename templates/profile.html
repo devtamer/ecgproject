@@ -1,0 +1,69 @@
+{% extends "layout.html" %} {% block header %}
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container-fluid">
+    <div class="logo-navbar">
+      <a class="navbar-brand" href="/">Heart Health</a>
+      <div>
+        <img
+          src="{{ url_for('static', filename='images/heart.jpeg') }}"
+          alt=""
+          class="heart-img-navbar"
+        />
+      </div>
+    </div>
+    <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+{% endblock header %} {% block content %}
+<div class="light-container">
+  <div class="box">
+    <h4 style="text-align: center">
+      Name: {{ user.FirstName }} {{ user.LastName }}
+    </h4>
+    <h4 style="text-align: center">Email: {{ user.email }}</h4>
+    <h4 style="text-align: center">Email: {{ user.phonenumber }}</h4>
+  </div>
+  <div class="box">
+    <form action="{{ url_for('profile') }}" method="POST" class="update-form">
+      <div class="form-group">
+        <label for="fname">First Name</label>
+        <input
+          type="text"
+          class="form-control"
+          name="fname"
+          id="fname"
+          placeholder="Ex: John"
+        />
+      </div>
+      <br />
+      <div class="form-group">
+        <label for="lname">Last Name</label>
+        <input
+          type="text"
+          class="form-control"
+          name="lname"
+          id="lname"
+          placeholder="Ex: Smith"
+        />
+      </div>
+      <br />
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input
+          type="email"
+          class="form-control"
+          name="email"
+          id="email"
+          placeholder="Ex: john@example.com"
+        />
+      </div>
+      <br />
+      <button type="submit" class="btn">Submit</button>
+    </form>
+  </div>
+</div>
+{% endblock content %}

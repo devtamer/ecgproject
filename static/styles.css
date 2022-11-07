@@ -3,10 +3,17 @@
   --darker-color: #100304;
   --accent-color: #ffffff;
 }
-.container {
-  background-color: #100304;
+.body {
+  background-color: #e1e1e1;
 }
-
+.container {
+  background-color: #e1e1e1;
+  max-width: 720px;
+}
+.light-container {
+  height: auto;
+  background-color: #e1e1e1;
+}
 html {
   background-color: var(--main-color);
 }
@@ -14,38 +21,71 @@ html {
 h3 {
   text-align: center;
 }
+@media only screen and(max-width: 720px) {
+  .box {
+    min-width: 200px;
+  }
+}
 
 .box {
-  position: absolute;
-  width: 40%;
-  min-height: 200px;
-  height: auto;
+  overflow: auto;
+  min-width: 350px;
   left: 50%;
-  transform: translate(-50%, 0);
-  margin-top: 30px;
   background-color: var(--accent-color);
   border-radius: 30px;
   padding: 30px;
   color: #010101;
 }
-
-.btn {
-  background-color: var(--main-color);
-  color: var(--accent-color);
+@media only screen and (max-width: 720px) {
+  .inside_home {
+    max-width: initial;
+  }
+}
+@media only screen and (min-width: 720px) {
+  .inside_home {
+    max-width: 80%;
+    height: 50px;
+    /* Center horizontally*/
+    margin: 0 auto;
+  }
 }
 
+.outside_home {
+  padding-top: 40px;
+  font-family: arial;
+  font-size: 14px;
+  width: 100%;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  background-color: #3f6dd9;
+  color: var(--accent-color);
+}
+.column {
+  width: 33.33%;
+  text-align: center;
+}
+.paddingtop {
+  float: right;
+}
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
 .btn:hover {
-  background-color: var(--accent-color);
+  background-color: #2f2929;
   color: var(--main-color);
   border-color: var(--main-color);
 }
 
 .email-btn {
-  position: absolute;
-  background-color: var(--main-color);
   color: var(--accent-color);
   left: 50%;
-  transform: translate(-50%, 0);
 }
 
 .email-btn:hover {
@@ -56,26 +96,45 @@ h3 {
   left: 50%;
   transform: translate(-50%, 0);
 }
-
+.home_images {
+  width: 100%;
+}
+.logo-navbar {
+  display: inline-flex;
+}
 .heart-img {
   position: relative;
-  width: 80%;
+  width: 100%;
   left: 50%;
   transform: translate(-50%, 0);
+}
+.heart-img-navbar {
+  width: 30px;
 }
 
 .navbar {
   background-color: var(--darker-color);
+  margin-bottom: 50px;
 }
 
 .nav-link {
   color: #e1e1e1 !important;
 }
+.centerdiv {
+  text-align: center;
+}
 
 .nav-link:hover {
   color: var(--main-color);
 }
-
+.account-div {
+  margin: auto;
+  width: 50%;
+  border: 3px solid rgb(2, 11, 2);
+  border-radius: 15px;
+  background-color: #e1e1e1;
+  padding: 10px;
+}
 .register-form,
 .login-form {
   width: 100%;

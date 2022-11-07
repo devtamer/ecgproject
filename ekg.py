@@ -11,7 +11,6 @@ from email.mime.image import MIMEImage
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import find_peaks
-from drawnow import *
 
 def handleSerial():
     # change '/dev/cu.usbmodel1301' to whichever usb port is being
@@ -48,9 +47,6 @@ def handleSerial():
         try:
             info = arduino.readline()
             data.append(float(info))
-
-            # drawnow(grafRT)                       
-            # plt.pause(.00000001)
 
         except ValueError:
 #            print("Problem capturing data", end='\n')

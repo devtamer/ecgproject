@@ -1,38 +1,64 @@
 {% extends "layout.html" %} {% block header %}
 <nav class="navbar navbar-expand-lg navbar-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{{ url_for('home') }}">Heart Health</a>
-  </div>
+    <div class="logo-navbar">
+      <a class="navbar-brand" href="/">Heart Health</a>
+      <div>
+        <img src="{{ url_for('static', filename='images/heart.jpeg') }}" alt="" class="heart-img-navbar" />
+      </div>
+    </div>
+    <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+      </li>
+    </ul>
 </nav>
 {% endblock header %} {% block content %}
-<div class="box">
-  <form action="{{ url_for('login') }}" method="POST" class="login-form">
-    <div class="form-group">
-      <label for="email">Email address</label>
-      <input
-        type="email"
-        class="form-control"
-        name="email"
-        id="email"
-        placeholder="Ex: john@example.com"
-        required
-      />
+<div class="outside_home">
+  <div class="inside_home">
+    <div class="box">
+      <form action="{{ url_for('login') }}" method="POST" class="login-form">
+        <fieldset class="form-group">
+
+          <div class="form-group">
+            {{ form.email.label(class="form-control-label")}}
+            {% if form.email.errors %}
+            {{ form.email(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.email.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %}
+            {{ form.email(class="form-control form-control-lg")}}
+            {% endif %}
+          </div>
+          <br />
+          <div class="form-group">
+            {{ form.password.label(class="form-control-label")}}
+            {% if form.password.errors %}
+            {{ form.password(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.password.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %}
+            {{ form.password(class="form-control form-control-lg")}}
+            {% endif %}
+          </div>
+          <br />
+        </fieldset>
+
+        <div class="form-group">
+          {{ form.submit(class="btn btn-outline-info")}}
+        </div>
+
+        <a href="{{ url_for('register') }}" class="btn paddingtop">Register</a>
+
+      </form>
     </div>
-    <br />
-    <div class="form-group">
-      <label for="pass">Password</label>
-      <input
-        type="password"
-        class="form-control"
-        name="pass"
-        id="pass"
-        placeholder="Password"
-        required
-      />
-    </div>
-    <br />
-    <button type="submit" class="btn">Login</button>
-    <p>New Here? <button type="register" class="btn">Register</button></p>
-  </form>
+  </div>
 </div>
 {% endblock content %}
+</div>

@@ -1,39 +1,98 @@
-{% extends "layout.html" %}
-
-{% block header %}
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{ url_for('home') }}">Heart Health</a>
-        </div>
-    </nav>
-{% endblock header %}
-
-{% block content %}
-  <div class="box">
-    <form action="{{ url_for('register') }}" method="POST" class="register-form">
+{% extends "layout.html" %} {% block header %}
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container-fluid">
+    <div class="logo-navbar">
+      <a class="navbar-brand" href="{{ url_for('home') }}">Heart Health</a>
+      <div>
+        <img
+          src="{{ url_for('static', filename='images/heart.jpeg') }}"
+          alt=""
+          class="heart-img-navbar"
+        />
+      </div>
+    </div>
+    <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+{% endblock header %} {% block content %}
+<div class="outside_home">
+  <div class="inside_home">
+    <div class="box">
+      <form
+        action="{{ url_for('register') }}"
+        method="POST"
+        class="register-form"
+      >
         <div class="form-group">
-            <label for="fname">First Name</label>
-            <input type="text" class="form-control" name="fname" id="fname" placeholder="Ex: John" required>
+          <label for="fname">First Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="fname"
+            id="fname"
+            placeholder="Ex: John"
+            required
+          />
         </div>
-        <br>
+        <br />
         <div class="form-group">
-            <label for="lname">Last Name</label>
-            <input type="text" class="form-control" name="lname" id="lname" placeholder="Ex: Smith" required>
+          <label for="lname">Last Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="lname"
+            id="lname"
+            placeholder="Ex: Smith"
+            required
+          />
         </div>
-        <br>
+        <br />
         <div class="form-group">
           <label for="email">Email address</label>
-          <input type="email" class="form-control" name="email" id="email" placeholder="Ex: john@example.com" required>
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            id="email"
+            placeholder="Ex: john@example.com"
+            required
+          />
         </div>
-        <br>
+        <br />
+        <!-- <div class="form-group">
+          <label for="phonenumber">Phone number</label>
+          <input
+            type="number"
+            class="form-control"
+            name="phonenumber"
+            id="phonenumber"
+            placeholder="Ex: 2314932392"
+          />
+        </div> -->
+        <br />
         <div class="form-group">
           <label for="pass">Password</label>
-          <input type="password" class="form-control" name="pass" id="pass" placeholder="Password" required>
+          <input
+            type="password"
+            class="form-control"
+            name="pass"
+            id="pass"
+            placeholder="Password"
+            required
+          />
         </div>
-        <br>
+        <br />
         <button type="submit" class="btn">Submit</button>
-    </form>
-    <br><br>
-    <p>Already have an account? <a href="{{ url_for('login') }}">Sign In</a></p>
+      </form>
+      <br /><br />
+      <p>
+        Already have an account? <a href="{{ url_for('login') }}">Sign In</a>
+      </p>
+    </div>
   </div>
+</div>
 {% endblock content %}

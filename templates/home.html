@@ -1,7 +1,16 @@
 {% extends "layout.html" %} {% block header %}
 <nav class="navbar navbar-expand-lg navbar-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/">Heart Health</a>
+    <div class="logo-navbar">
+      <a class="navbar-brand" href="/">Heart Health</a>
+      <div>
+        <img
+          src="{{ url_for('static', filename='images/heart.jpeg') }}"
+          alt="logo"
+          class="heart-img-navbar"
+        />
+      </div>
+    </div>
     <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
       <li class="nav-item">
         <a class="nav-link" href="{{ url_for('register') }}">Register</a>
@@ -13,28 +22,45 @@
   </div>
 </nav>
 {% endblock header %} {% block content %}
-<div class="box">
-  <h3>Welcome To Heart Health!</h3>
-  <br />
-  <div width="100%">
-    <img
-      src="{{ url_for('static', filename='images/heart.jpeg') }}"
-      alt=""
-      class="heart-img"
-      width="200"
-    />
+<div class="outside_home">
+  <div class="inside_home">
+    <h3>Welcome To Heart Health!</h3>
+    <div class="row">
+      <div class="column">
+        <img
+          src="{{ url_for('static', filename='images/img_solder.jpg') }}"
+          class="home_image"
+          width="80%"
+        />
+      </div>
+      <div class="column">
+        <img
+          src="{{ url_for('static', filename='images/hardware_setup.png') }}"
+          class="home_images"
+          width="110%"
+        />
+      </div>
+
+      <div class="column">
+        <img
+          src="{{ url_for('static', filename='images/live_setup.jpg') }}"
+          class="home_images"
+        />
+      </div>
+    </div>
+    <br />
+    <p>
+      Heart Health puts your heart as priority #1. Ease your mind about managing
+      your heart's health records with our easy to use web page!
+    </p>
+    <p>
+      This was a project for our wireless networks course, the goal was to
+      develop the hardware and software to record an electrocardiogram, store
+      and perform analysis with the data, and return the results to the users
+      smartphone and this website. To learn more about the project and view the
+      code
+      <a href="https://github.com/devtamer/ecgproject">visit here.</a>
+    </p>
   </div>
-  <br />
-  <p>
-    Heart Health puts your heart as priority #1. Ease your mind about managing
-    your heart's health records with our easy to use web page!
-  </p>
-  <p>
-    This was a project for our wireless networks course, the goal was to develop
-    the hardware and software to record an electrocardiogram, store and perform
-    analysis with the data, and return the results to the users smartphone and
-    this website. To learn more about the project and view the code,
-    <a href="https://github.com/devtamer/ecgproject">visit here.</a>
-  </p>
 </div>
 {% endblock content %}
