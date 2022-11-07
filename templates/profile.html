@@ -13,22 +13,32 @@
     </div>
     <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
       <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
+        <a class="nav-link" href="{{ url_for('results', id=user.ID) }}"
+          >Results</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('signOut') }}">Sign Out</a>
       </li>
     </ul>
   </div>
 </nav>
 {% endblock header %} {% block content %}
 <div class="light-container">
-  <div class="box">
-    <h4 style="text-align: center">
-      Name: {{ user.FirstName }} {{ user.LastName }}
-    </h4>
-    <h4 style="text-align: center">Email: {{ user.email }}</h4>
-    <h4 style="text-align: center">Email: {{ user.phonenumber }}</h4>
+  <div class="box" style="text-align: left">
+    <h4 style="text-decoration: underline">Current Info</h4>
+    <p>Name: {{ user.FirstName }} {{ user.LastName }}</p>
+    <p>Email: {{ user.Email }}</p>
+    <p>Phone Number: {{ user.PhoneNumber }}</p>
   </div>
+  <br />
   <div class="box">
-    <form action="{{ url_for('profile') }}" method="POST" class="update-form">
+    <h4 style="text-decoration: underline">Update Profile</h4>
+    <form
+      action="{{ url_for('profile', id=user.ID) }}"
+      method="POST"
+      class="update-form"
+    >
       <div class="form-group">
         <label for="fname">First Name</label>
         <input
@@ -52,7 +62,7 @@
       </div>
       <br />
       <div class="form-group">
-        <label for="email">Email address</label>
+        <label for="email">Email Address</label>
         <input
           type="email"
           class="form-control"
@@ -62,7 +72,12 @@
         />
       </div>
       <br />
-      <button type="submit" class="btn">Submit</button>
+      <div class="form-group">
+        <label for="number">Phone Number</label>
+        <input type="number" class="form-control" name="number" id="number" />
+      </div>
+      <br />
+      <button type="submit" class="btn">Update</button>
     </form>
   </div>
 </div>

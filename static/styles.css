@@ -78,7 +78,7 @@ h3 {
   clear: both;
 }
 .btn:hover {
-  background-color: #2f2929;
+  background-color: #2a133c;
   color: var(--main-color);
   border-color: var(--main-color);
 }
@@ -89,12 +89,10 @@ h3 {
 }
 
 .email-btn:hover {
-  position: absolute;
-  background-color: var(--accent-color);
+  background-color: #2a133c;
   color: var(--main-color);
   border-color: var(--main-color);
   left: 50%;
-  transform: translate(-50%, 0);
 }
 .home_images {
   width: 100%;
@@ -136,6 +134,7 @@ h3 {
   padding: 10px;
 }
 .register-form,
-.login-form {
+.login-form,
+.update-form {
   width: 100%;
 }

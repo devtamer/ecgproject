@@ -11,7 +11,10 @@
     </div>
     <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
       <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('profile', id=user.id) }}">My Profile</a>
+        <a class="nav-link" href="{{ url_for('profile', id=current_user.get_id()) }}" method="GET">My Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('signOut') }}" >Sign Out</a>
       </li>
     </ul>
   </div>
@@ -23,11 +26,11 @@
   <div class="box">
     <h4 style="text-align: center;">Showing results for: {{ (user.FirstName).capitalize() }} {{ user.LastName.capitalize() }}</h1>
       <img src="{{ url_for('static', filename='images/ecg/1.jpeg') }}" class="heart-img">
-      <br>
+      <br/>
       <div class="centerdiv">
-        <h5>Want your results sent to you?</h5>
-        <button type="submit" class="btn email-btn">Email To {{ user.Email }}</button>
-        <button type="submit" class="btn text-btn">Text To {{ user.PhoneNumber }}</button>
+        <h3>Want your results sent to you?</h5>
+        <button type="submit" class="btn email-btn">Email {{ user.Email }}</button>
+        <button type="submit" class="btn text-btn">Text {{ user.PhoneNumber }}</button>
       </div>
   </div>
 </div>

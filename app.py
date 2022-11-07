@@ -24,10 +24,10 @@ heartdb = 'heart.db'
 class User(UserMixin):
     def __init__(self, id, firstName, lastName, phoneNumber, email, password):
          self.id = str(id)
-         self.firstname = firstName
-         self.lastname = lastName
-         self.phonenumber = phoneNumber
-         self.email = email
+         self.FirstName = firstName
+         self.LastName = lastName
+         self.PhoneNumber = phoneNumber
+         self.Email = email
          self.password = password
          self.authenticated = False
     def is_active(self):
@@ -51,6 +51,8 @@ def home():
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
+    if(current_user.is_authenticated):
+        current_user.is_authenticated = False
     if request.method == 'GET':
         return render_template('register.html', title="Register")
     elif request.method == 'POST':
@@ -59,13 +61,14 @@ def register():
                 "FirstName" : request.form['fname'],
                 "LastName" : request.form['lname'],
                 "Email" : request.form['email'],
-                "Password" : bcrypt.generate_password_hash(request.form['pass'])
+                "Password" : bcrypt.generate_password_hash(request.form['pass']),
+                "PhoneNumber": request.form['number']
             }   
-            with sqlite3.connect(heartdb) as con:
-                cur = con.cursor()
-                cur.execute("INSERT INTO user (FirstName, LastName, Email, Password) VALUES(?,?,?,?)", (user["FirstName"], user["LastName"], user["Email"], user["Password"]))
-                con.commit()
-                con.close()
+            con = sqlite3.connect(heartdb)
+            cur = con.cursor()
+            cur.execute("INSERT INTO user (FirstName, LastName, Email, Password, PhoneNumber) VALUES(?,?,?,?,?)", (user["FirstName"], user["LastName"], user["Email"], user["Password"], user["PhoneNumber"]))
+            con.commit()
+            con.close()
         except sqlite3.Error:
             return render_template('404.html', error="SQL Error")
         finally:
@@ -76,14 +79,23 @@ def load_user(id):
    conn = sqlite3.connect(heartdb)
    curs = conn.cursor()
    curs.execute("SELECT * from user where id = (?)",[id])
-   lu = curs.fetchone()
-   if lu is None:
+   user = curs.fetchone()
+   if user is None:
     return None
    else:
-    return User(int(lu[0]),lu[1],lu[2],lu[5], lu[3], lu[4])
+    return User(int(user[0]),user[1],user[2],user[5], user[3], user[4])
+
+@app.route("/signout")
+def signOut():
+    if(current_user.is_authenticated):
+        current_user.is_authenticated = False
+    form = LoginForm()
+    return render_template('login.html', title='Login', form=form)
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
+    if(current_user.is_authenticated):
+        return redirect(url_for('results', id=current_user.get_id()))
     form = LoginForm()
     if request.method == 'GET':
         return render_template('login.html',title='Login', form=form)
@@ -92,15 +104,20 @@ def login():
             con = sqlite3.connect(heartdb)
             cur = con.cursor()
             cur.execute("SELECT * FROM user where email = (?)",  [form.email.data])
-            user = list(cur.fetchone())
-            Us = load_user(user[0])
-            if(form.email.data == Us.email and bcrypt.check_password_hash(Us.password, form.password.data)):
-                login_user(Us, remember=form.remember.data)
-                Umail = list({form.email.data})[0].split('@')[0]
-                flash('Logged in successfully '+Umail)
-                return redirect(url_for('results', id=Us.id))
+            result = (cur.fetchone())
+            if(result is None):
+                error = 'User Does Not Exist.'
+                return render_template('login.html', error=error, form=form)
             else:
-                flash('Login Unsuccessfull.')
+                user = list(result)
+                Us = load_user(user[0])
+                if(form.email.data == Us.Email and bcrypt.check_password_hash(Us.password, form.password.data)):
+                    login_user(Us, remember=form.remember.data)
+                    Umail = list({form.email.data})[0].split('@')[0]
+                    flash('Logged in successfully '+Umail)
+                    return redirect(url_for('results', id=Us.id))
+                else:
+                    flash('Login Unsuccessfull.')
         except sqlite3.Error:
                 return render_template('404.html', error="SQL Error")
 
@@ -134,52 +151,63 @@ def send_email(recipient, ecgbpm, ecgpng):
 
 @app.route("/results/<id>")
 def results(id):
-    try:
-        con = sqlite3.connect(heartdb)
-        cur = con.cursor()
-        cur.execute("SELECT * FROM user WHERE id = ?", [id])
-        result = cur.fetchone()
-        user = {
-            "ID": result[0],
-            "FirstName" : result[1],
-            "LastName" : result[2],
-            "Email" : result[3],
-            "PhoneNumber": result[5]
-        }  
-        return render_template('results.html', user=user, id=id)
-
-    except sqlite3.Error:
-        return render_template('404.html', error="Error Verifying User")
-
-@app.route("/profile/<id>")
-def profile(id):
-    if request.method == 'GET':
-        print("entered get method from profile")
-        cur = con.curser()
-        cur.execute("SELECT * FROM user WHERE Id = ?", id )
-        result = cur.fetchone()
-        print(result)
-        return render_template('profile.html', title="Profile")
-    elif request.method == 'POST':
+    if(current_user.get_id() == id):
         try:
-            newuser = {
-                "FirstName" : request.form['fname'],
-                "LastName" : request.form['lname'],
-                "Email" : request.form['email'],
-                "Phone Number": request.form['phonenumber']
-            }
-            with sqlite3.connect(heartdb) as con:
-                cur = con.curser()
-                cur.execute("SELECT * FROM user WHERE Id = ?", id )
-                result = cur.fetchone()
-                user = {
-                    "FirstName" : result[1],
-                    "LastName" : result[2],
-                    "Email" : result[3]
-                }  
-                return render_template('profile.html', user=user, id=id)
+            con = sqlite3.connect(heartdb)
+            cur = con.cursor()
+            cur.execute("SELECT * FROM user WHERE id = ?", [id])
+            result = cur.fetchone()
+            user = {
+                "ID": result[0],
+                "FirstName" : result[1],
+                "LastName" : result[2],
+                "Email" : result[3],
+                "PhoneNumber": result[5]
+            }  
+            return render_template('results.html', user=user, id=id)
         except sqlite3.Error:
-            return render_template('404.html', error="Error Updating User")
+            return render_template('404.html', error="Error Verifying User. Please sign in again.")
+    else:
+        return redirect(url_for('login'))
+
+@app.route("/profile/<id>", methods=['GET', 'POST'])
+def profile(id):
+    if(current_user.is_authenticated):
+        if request.method == 'GET':
+            user = load_user(current_user.get_id())
+            user = {
+                "ID": user.id,
+                "FirstName" : user.FirstName.capitalize(),
+                "LastName" : user.LastName.capitalize(),
+                "Email" : user.Email,
+                "PhoneNumber": user.PhoneNumber
+            }  
+            return render_template('profile.html', user=user, id=id)
+        elif request.method == 'POST':
+            try:
+                user = load_user(current_user.get_id())
+                newuser = {
+                    "FirstName" : request.form['fname'],
+                    "LastName" : request.form['lname'],
+                    "Email" : request.form['email'],
+                    "PhoneNumber": request.form['number']
+                }
+                con = sqlite3.connect(heartdb)
+                cur = con.cursor()
+                keytest = 'FirstName'
+                name = 'Name'
+                for key in newuser:
+                    if newuser[key] != '':
+                        print(type(key), type(newuser[key]))
+                        cur.execute("UPDATE user SET {} = '{}' WHERE id = {}".format(key, newuser[key], user.id))
+                con.commit()
+                con.close()
+                return redirect(url_for('profile', id=user.id))
+            except sqlite3.Error:
+                return render_template('404.html', error="Error Updating User")
+    else:
+        return redirect(url_for('login'))
+
 
 
 
