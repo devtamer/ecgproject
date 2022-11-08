@@ -1,6 +1,15 @@
 # Wireless ECG Monitor - Heart Health
 
 <p>This was a project for my wireless networks course, our goal was to develop the hardware and software to record an electrocardiogram, store and perform analysis with the data, and return the results to the users smartphone and our website.</p>
+<p><strong>Setup Website Locally</strong></p>
+<ul>
+  <li>Clone this repository on your machine</li>
+  <li>'cd' into the newly created directory via:<em> cd ecgproject</em></li>
+  <li>Launch and activate virtual env via: <em>python -m venv .</em></li>
+  <li>pip install -r requirements.txt</li>
+  <li>launch website via: <em>flask run</em></li>
+  <ul><li>if errors, ensure correct env variable is set via: <em>export FLASK_APP=app.py</em></li></ul>
+</ul>
 
 ## Hardware Setup
 
