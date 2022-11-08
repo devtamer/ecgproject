@@ -8,7 +8,8 @@ __pycache__/
 
 # custom files
 *.DS_Store
-
+Procfile
+*.csv
 
 # Distribution / packaging
 .Python
